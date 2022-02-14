@@ -135,9 +135,9 @@ class graphite::config inherits graphite::params {
     "${::graphite::graphiteweb_log_dir_REAL}/info.log",
     "${::graphite::graphiteweb_log_dir_REAL}/exception.log"]:
     ensure    => file,
-    group     => $gr_web_group_REAL,
+    group     => pick($::graphite::gr_group, $gr_web_group_REAL),
     mode      => '0755',
-    owner     => $gr_web_user_REAL,
+    owner     => pick($::graphite::gr_user, $gr_web_user_REAL),
     seltype   => 'httpd_sys_rw_content_t',
     subscribe => Exec['Initial django db creation'],
   }
